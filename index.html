@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniversalHishab AI</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --matte-black: #18191a;
+      --matte-black-alt: #1e1f20;
+      --accent-green: #24e07a;
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0a0;
+      --card-border: #2a2a2a;
+    }
+
+    body {
+      font-family: 'Hind Siliguri', sans-serif;
+      background: var(--matte-black);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    .noise {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.05;
+      z-index: 1;
+      background: url('data:image/png;base64,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');
+    }
+
+    .top-bar {
+      background: var(--matte-black-alt);
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--card-border);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .user-info {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .time-display, .user-display {
+      background: rgba(36, 224, 122, 0.1);
+      padding: 8px 15px;
+      border-radius: 8px;
+      font-family: monospace;
+      color: var(--accent-green);
+    }
+
+    header {
+      background: var(--matte-black-alt);
+      color: var(--text-primary);
+      padding: 100px 20px 60px;
+      text-align: center;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 3.8rem;
+      margin-bottom: 10px;
+      font-weight: bold;
+      background: linear-gradient(135deg, var(--text-primary), var(--accent-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    h2 {
+      font-size: 2rem;
+      border-left: 6px solid var(--accent-green);
+      padding-left: 14px;
+      margin-bottom: 25px;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .card {
+      background: var(--matte-black-alt);
+      border: 1px solid var(--card-border);
+      padding: 30px;
+      border-radius: 8px;
+      margin-bottom: 35px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--accent-green);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(36,224,122,0.15);
+      border-color: var(--accent-green);
+    }
+
+    ul {
+      list-style-type: none;
+    }
+
+    ul li {
+      margin-bottom: 12px;
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+    }
+
+    ul li::before {
+      content: "•";
+      color: var(--accent-green);
+      font-weight: bold;
+      margin-right: 10px;
+      font-size: 1.5em;
+    }
+
+    .highlight {
+      background: var(--accent-green);
+      color: var(--matte-black);
+      padding: 5px 12px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .slogan {
+      background: var(--matte-black-alt);
+      color: var(--text-primary);
+      padding: 25px;
+      font-style: italic;
+      font-size: 1.2rem;
+      text-align: center;
+      border-top: 2px solid var(--accent-green);
+      border-bottom: 2px solid var(--accent-green);
+      margin-top: 40px;
+    }
+
+    footer {
+      background: var(--matte-black-alt);
+      color: var(--text-secondary);
+      text-align: center;
+      padding: 25px;
+      font-size: 0.9rem;
+    }
+
+    .graphic-bar {
+      height: 4px;
+      width: 80px;
+      background: linear-gradient(to right, var(--accent-green), var(--matte-black-alt));
+      margin: 20px auto;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .top-bar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+      }
+
+      .user-info {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      header {
+        padding-top: 140px;
+      }
+
+      header h1 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+
+  <div class="top-bar">
+    <div class="user-info">
+      <div class="time-display" id="current-time">2025-06-09 20:04:09</div>
+      <div class="user-display">@Rawfunr1</div>
+    </div>
+  </div>
+
+  <header>
+    <h1>UniversalHishab AI</h1>
+    <div class="graphic-bar"></div>
+    <p>আপনার ব্যবসার জন্য স্মার্ট হিসাব ও তথ্য সহকারী</p>
+  </header>
+
+  <section>
+    <h2>পরিচিতি</h2>
+    <div class="card">
+      <p><span class="highlight">UniversalHishab AI</span> এমন একটি ইনটেলিজেন্ট সার্ভিস, যেটি যেকোনো ব্যবসার যাবতীয় হিসাব, খরচ, আয়ের হিসাব, পেমেন্ট, কর্মচারী বেতন এবং প্রাত্যহিক প্রশ্নোত্তরের কাজ দ্রুত ও নির্ভুলভাবে পরিচালনা করে।</p>
+    </div>
+
+    <h2>মূল বৈশিষ্ট্য</h2>
+    <div class="card">
+      <ul>
+        <li>চ্যাট, কল এবং SMS-ভিত্তিক লাইভ সহায়তা</li>
+        <li>স্ক্যানকৃত কাগজ বা মিশ্র ডেটা থেকে তথ্য সংগ্রহ করে ডিজিটাল ফর্মে রূপান্তর</li>
+        <li>এআই দ্বারা চালিত প্রশ্নোত্তর এবং হিসাব বিশ্লেষণ</li>
+        <li>ইনভয়েস, প্রফিট/লস, পেমেন্ট রেকর্ডিং</li>
+        <li>রিমাইন্ডার, ডিউ অ্যালার্ট ও ফলোআপ রিপোর্টিং</li>
+      </ul>
+    </div>
+
+    <h2>কারা উপকৃত হবে?</h2>
+    <div class="card">
+      <ul>
+        <li>রিটেইল ও পাইকারি ব্যবসা</li>
+        <li>ম্যানুফ্যাকচারিং ও ফ্যাক্টরি প্রতিষ্ঠান</li>
+        <li>হাসপাতাল ও ক্লিনিক</li>
+        <li>স্কুল, কলেজ ও ট্রেনিং ইনস্টিটিউট</li>
+        <li><b>বিশেষভাবে:</b> ব্যাংক ও আর্থিক প্রতিষ্ঠান</li>
+      </ul>
+    </div>
+
+    <h2>আপনার লাভ কী?</h2>
+    <div class="card">
+      <ul>
+        <li>হিসাবের ভুল কমে যাবে</li>
+        <li>ডেটা সহজে খুঁজে পাওয়া যাবে</li>
+        <li>কর্মচারীর সময় ও খরচ কমবে</li>
+        <li>গ্রাহক সেবা আরও উন্নত হবে</li>
+      </ul>
+    </div>
+
+    <h2>প্যাকেজ ও মূল্য</h2>
+    <div class="card">
+      <ul>
+        <li><b>Starter:</b> ছোট ব্যবসার জন্য – ৯৯৯ টাকা/মাস</li>
+        <li><b>Pro:</b> মাঝারি ব্যবসার জন্য – ২৯৯৯ টাকা/মাস</li>
+        <li><b>Enterprise:</b> বড় প্রতিষ্ঠানের জন্য – কাস্টম চুক্তি</li>
+      </ul>
+    </div>
+
+    <div class="slogan">
+      "হিসাব এখন হাতের মুঠোয়" – UniversalHishab AI
+    </div>
+  </section>
+
+  <footer>
+    &copy; ২০২৫ UniversalHishab AI — সব স্বত্ব সংরক্ষিত।
+  </footer>
+
+  <script>
+    // Live Clock Update
+    function updateClock() {
+      const clockElement = document.getElementById('current-time');
+      const now = new Date();
+      
+      const year = now.getUTCFullYear();
+      const month = String(now.getUTCMonth() + 1).padStart(2, '0');
+      const day = String(now.getUTCDate()).padStart(2, '0');
+      const hours = String(now.getUTCHours()).padStart(2, '0');
+      const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+      const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+
+      const timeString = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+      clockElement.textContent = timeString;
+    }
+
+    // Update clock every second
+    setInterval(updateClock, 1000);
+    updateClock(); // Initial update
+  </script>
+</body>
+</html>
